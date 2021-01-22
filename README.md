@@ -16,13 +16,13 @@ npx react-native init TsRnWeb --template react-native-template-typescript
 npx生成rn for ts模板，安装完成后这就是一个官方可运行的RN项目了，接下来我们就来修改这个模板
 
 3. 如果你环境已经配置好了，就可以在安卓哦和ios端跑起来看一一下项目的demo了。
-  ### ios
+ ios
  
  npm run start
  
  npm run ios
  
- ### android
+ android
  
  npm run android
  
