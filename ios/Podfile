@@ -3,12 +3,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'waterCulture' do
+target 'rnWeb' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
-  target 'waterCultureTests' do
+  target 'rnWebTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -23,10 +23,10 @@ target 'waterCulture' do
   end
 end
 
-target 'waterCulture-tvOS' do
-  # Pods for waterCulture-tvOS
+target 'rnWeb-tvOS' do
+  # Pods for rnWeb-tvOS
 
-  target 'waterCulture-tvOSTests' do
+  target 'rnWeb-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
