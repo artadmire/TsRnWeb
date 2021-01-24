@@ -221,3 +221,4 @@ npx react-native link @react-native-community/async-storage 这个类似于浏�
 原生客户端使用npm run android或npx react-native run-android(npm v5.2+)启动
 npm run web:dev启动webpack-dev-server调试，和普通移动端开发一样
 npm run web打包为生产环境代码到dist-H5
+
