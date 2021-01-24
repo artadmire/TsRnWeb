@@ -16,7 +16,10 @@ import {
   View,
   Text,
   StatusBar,
+  Image
 } from 'react-native';
+// import {Image} from 'react-native-elements';
+import imgUri from './img/plus.png';
 
 const Colors = {
   lighter: 'red',
@@ -26,6 +29,7 @@ const Colors = {
 };
 
 declare const global: {HermesInternal: null | {}};
+const img = require('./img/light.svg');
 
 const App = () => {
   return (
@@ -59,6 +63,7 @@ const App = () => {
               <Text style={styles.sectionDescription}>
                 Read the docs to discover what to do next:
               </Text>
+              <Image style={styles.image} source={imgUri} />
             </View>
           </View>
         </ScrollView>
@@ -103,6 +108,10 @@ const styles = StyleSheet.create({
     padding: 4,
     paddingRight: 12,
     textAlign: 'right',
+  },
+  image: {
+    width: 40,
+    height: 40,
   },
 });
 
