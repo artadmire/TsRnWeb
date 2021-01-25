@@ -16,7 +16,7 @@ import {
   View,
   Text,
   StatusBar,
-  Image
+  Image,
 } from 'react-native';
 // import {Image} from 'react-native-elements';
 import imgUri from './img/plus.png';
@@ -29,7 +29,6 @@ const Colors = {
 };
 
 declare const global: {HermesInternal: null | {}};
-const img = require('./img/light.svg');
 
 const App = () => {
   return (

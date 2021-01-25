@@ -1,11 +1,8 @@
-
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const path = require('path');
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV;
 
 module.exports = function () {
   return {
@@ -68,31 +65,52 @@ module.exports = function () {
         //     },
         //   ]
         // },
+        // {
+        //   test: /\.css$/,
+        //   use: ExtractTextPlugin.extract({
+        //     fallback: {
+        //       loader: 'style-loader',
+        //       options: {
+        //         insertAt: 'top', // 'bottom' 相对于头部(只在头部区域)的top和bottom, style标签插入的位置 {before: '#mydiv'}
+        //       },
+        //     },
+        //     use: [
+        //       {
+        //         loader: 'css-loader', // 让js文件识别css文件
+        //         options: {
+        //           modules: true,
+        //         },
+        //       },
+        //       {
+        //         loader: 'postcss-loader',
+        //         options: {
+        //           ident: 'postcss',
+        //           plugins: [require('autoprefixer')()],
+        //         },
+        //       },
+        //     ],
+        //   }),
+        // },
         {
           test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: {
+          use: [
+            {
               loader: 'style-loader',
+            },
+            {
+              loader: 'css-loader', // 让js文件识别css文件
               options: {
-                insertAt: 'top', // 'bottom' 相对于头部(只在头部区域)的top和bottom, style标签插入的位置 {before: '#mydiv'}
+                modules: true,
               },
             },
-            use: [
-              {
-                loader: 'css-loader', // 让js文件识别css文件
-                options: {
-                  modules: true,
-                },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: [require('autoprefixer')()],
               },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  ident: 'postcss',
-                  plugins: [require('autoprefixer')()],
-                },
-              },
-            ],
-          }),
+            },
+          ],
         },
         {
           test: /\.(png|jpg|jgeg|gif|svg)$/,
@@ -122,6 +140,16 @@ module.exports = function () {
             // 提取node_modules中文件 都喜欢把第三方依赖都打包在一起
             test: /([\\/]node_modules[\\/])/,
             name: 'vendor',
+            chunks: 'all',
+            priority: 10, //优先级，先打包到哪个组里面，值越大，优先级越高
+            enforce: true,
+          },
+          reactNative: {
+            name: 'react-native-web',
+            test: (module) => /react-native-web/.test(module.context),
+            chunks: 'initial',
+            priority: 11,
+            enforce: true,
           },
         },
       },
@@ -134,18 +162,19 @@ module.exports = function () {
       },
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
-    externals: {
-    },
+    // externals: {
+    //   react: 'React',
+    //   'react-dom': 'ReactDOM',
+    // },
     plugins: [
-      // 提取css文件
-      // new MiniCssExtractPlugin({
-      //   filename: '[name].[contenthash].css',
-      //   chunkFilename: '[id].[contenthash].css',
+      // new webpack.DllReferencePlugin({
+      //   context: __dirname,
+      //   manifest: require('./src/js/bundle-manifest.json'),
       // }),
       new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        'process.env.DEBUG': JSON.stringify(process.env.DEBUG)
+        'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
       }),
       new HtmlWebpackPlugin({
         filename: 'index.html',
@@ -158,6 +187,7 @@ module.exports = function () {
         inject: true, // 是否自动引入 默认true true/false
       }),
     ],
+    devtool: 'false', // 缩小文件体积
     devServer: {
       contentBase: '/dist',
       hot: true,
